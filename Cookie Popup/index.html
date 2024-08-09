@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Consent</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+    <!------------------------------------------------START------------------------------------------------->
+
+    <div id="fv-cookieConsentPopup" class="fv-cookie-popup">
+        <div class="fv-cookie-content">
+            <button id="fv-closePopup" class="fv-close-popup" aria-label="Close Cookie Consent Popup">&times;</button>
+            <h2 aria-label="Cookie Consent">Cookies Consent</h2>
+            <p>
+                We respect your privacy and aim for the best website experience in compliance with the <a href="https://laws-lois.justice.gc.ca/eng/acts/p-8.6/" target="_blank">PIPEDA</a>, and we ask you for meaningful consent for our use of cookies. By allowing them, you'll enjoy a tailored experience and more relevant content. Disabling cookies may result in a less personalized visit. Feel free to update your preferences anytime. For more information, please read our <a href="#" target="_blank">Privacy Policy</a> and <a href="#" target="_blank">Cookie Policy</a>. Happy browsing!
+            </p>
+            <div class="fv-cookie-buttons">
+                <button id="fv-acceptCookies" class="fv-btn">Accept All Cookies</button>
+                <button id="fv-manageCookies" class="fv-btn">Manage Cookies</button>
+                <button id="fv-declineCookies" class="fv-btn">Decline Non-Essential Cookies</button>
+            </div>
+            <div id="fv-cookieSettings" class="fv-cookie-settings" style="display: none;">
+                <h3 aria-label="Manage Cookies">Cookies Manager:</h3>
+                <div class="fv-toggle-switch">
+                    <label class="fv-toggle-label"><strong>Essential Cookies:</strong> Required for the website to function properly and cannot be disabled.</label>
+                    <label class="fv-switch">
+                        <input type="checkbox" id="fv-essentialCookies" checked disabled>
+                        <span class="fv-slider" style="background-color: #919191;"></span>
+                    </label>
+                </div>
+                <div class="fv-toggle-switch">
+                    <label class="fv-toggle-label"><strong>Analytics:</strong> Help us understand how visitors interact with our website by collecting and reporting information anonymously.</label>
+                    <label class="fv-switch">
+                        <input type="checkbox" id="fv-analyticsCookies">
+                        <span class="fv-slider"></span>
+                    </label>
+                </div>
+                <div class="fv-toggle-switch">
+                    <label class="fv-toggle-label"><strong>Other:</strong> Used to personalize your experience and for marketing purposes.</label>
+                    <label class="fv-switch">
+                        <input type="checkbox" id="fv-otherCookies">
+                        <span class="fv-slider"></span>
+                    </label>
+                </div>
+                <button id="fv-savePreferences" class="fv-btn">Save Preferences</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="fv-manageCookiesTab" class="fv-manage-cookies-tab">
+        <i class="fas fa-cookie-bite"></i>
+    </div>
+
+    <!------------------------------------------------ END------------------------------------------------->
+
+    <script src="js/cookie.js"></script>
+</body>
+
+</html>

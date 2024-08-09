@@ -1,0 +1,232 @@
+/*---------------------------------------- General Popup Styling ---------------------------------*/
+
+body {
+  background-color: #1b2835;
+}
+
+.fv-cookie-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #094797;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  padding: 40px 0;
+  z-index: 1000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fv-cookie-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+}
+
+.fv-cookie-popup h2,
+.fv-cookie-popup h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.3393rem + 0.6857vw, 2.625rem);
+}
+
+.fv-cookie-popup p {
+  padding: 0 5px;
+  text-align: justify;
+  font-size: clamp(0.75rem, 0.6989rem + 0.2273vw, 1.125rem);
+}
+
+.fv-cookie-settings label {
+  margin: 15px auto;
+  padding: 0 10px;
+  font-size: clamp(0.6875rem, 0.6449rem + 0.1894vw, 1rem);
+}
+
+.fv-cookie-popup a {
+  color: #95bbe4;
+}
+
+/*---------------------------------------- Button Styling --------------------------- */
+.fv-cookie-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.fv-cookie-popup .fv-btn {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 4px;
+  background: #fff;
+  color: #084689;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+}
+
+.fv-cookie-popup .fv-btn:hover {
+  background: #207de0;
+  color: #fff;
+}
+
+.fv-cookie-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*------------------------------------------ Toggle Switch Styling ----------------------*/
+.fv-toggle-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 97.5%;
+  margin: 10px auto;
+  padding: 0 20px 0 5px;
+  background-color: #07407c;
+  border-radius: 5px;
+}
+
+.fv-toggle-label {
+  flex: 1;
+  text-align: left;
+  margin-right: 15px;
+  color: #e4e4e4;
+  font-size: clamp(0.625rem, 0.5909rem + 0.1515vw, 0.875rem);
+}
+
+.fv-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 34px;
+}
+
+.fv-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.fv-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.fv-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .fv-slider {
+  background-color: #007bff;
+}
+
+input:checked + .fv-slider:before {
+  transform: translateX(26px);
+}
+
+/* -------------------------------------- Manage Cookies Tab Styling -----------------------*/
+.fv-manage-cookies-tab {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.fv-manage-cookies-tab i {
+  font-size: 24px;
+}
+
+.fv-manage-cookies-tab:hover {
+  background: #0056b3;
+}
+
+/* ---------------------------------------- Style for the close button --------------------*/
+.fv-close-popup {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 50px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.fv-close-popup:hover,
+.fv-close-popup:focus {
+  color: #007bff;
+}
+
+/* ----------------------------------------- Media Queries ----------------------------------- */
+@media (max-width: 1000px) {
+  .fv-cookie-popup {
+    width: 100%;
+    padding: 20px 0 20px 0;
+  }
+  .fv-cookie-popup p {
+    padding: 0 5%;
+  }
+
+  .fv-cookie-popup .fv-btn {
+    width: 90%;
+  }
+
+  .fv-cookie-buttons,
+  .fv-cookie-settings {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fv-cookie-buttons .fv-btn,
+  .fv-cookie-settings .fv-toggle-switch {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .fv-cookie-settings .fv-toggle-switch {
+    flex-direction: row;
+    align-items: center;
+    width: 85%;
+  }
+
+  .fv-toggle-switch {
+    padding: 0 20px 0 0px;
+  }
+
+  .fv-cookie-settings .fv-toggle-label {
+    text-align: left;
+    margin: 10px 0 10px 0;
+  }
+
+  .fv-cookie-settings .fv-slider {
+    margin: 0;
+  }
+}
