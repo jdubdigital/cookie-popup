@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // -------------------------------------------------------------- INITIALIZATION:
 
   // Check if the user has already made a choice
-  if (!localStorage.getItem("cookieConsent")) {
+  if (!localStorage.getItem("fallsviewCookieConsent")) {
     consentPopup.style.display = "block";
   } else {
     manageCookiesTab.style.display = "block"; // Show the tab if consent has been set
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Remove a specified cookie by setting its Max-Age to a negative value
   function deleteCookie(name) {
-    document.cookie = `${name}=; Max-Age=-99999999; path=/; domain=${window.location.hostname}`;
+    document.cookie = `${name}=; Max-Age=-1; path=/; domain=${window.location.hostname}`;
   }
 
   // Remove Google Analytics cookies
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Retrieve consent settings from localStorage and load or delete cookies based on the user's consent status
   function handleCookies() {
-    const consent = localStorage.getItem("cookieConsent");
+    const consent = localStorage.getItem("fallsviewCookieConsent");
     const analyticsConsent = localStorage.getItem("fallsviewAnalyticsCookies") === "true";
     const otherConsent = localStorage.getItem("fallsviewOtherCookies") === "true";
 
@@ -127,8 +127,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Update checkboxes based on stored preferences
   function updateCheckboxes() {
-    document.getElementById("fv-analyticsCookies").checked = localStorage.getItem("analyticsCookies") === "true";
-    document.getElementById("fv-otherCookies").checked = localStorage.getItem("otherCookies") === "true";
+    document.getElementById("fv-analyticsCookies").checked = localStorage.getItem("fallsviewAnalyticsCookies") === "true";
+    document.getElementById("fv-otherCookies").checked = localStorage.getItem("fallsviewOtherCookies") === "true";
   }
 
   // -------------------------------------------------------------- INITIAL CALLS:
