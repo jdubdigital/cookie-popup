@@ -143,6 +143,10 @@ input:checked + .fv-slider:before {
   transform: translateX(26px);
 }
 
+input:checked:focus {
+  background-color: none;
+}
+
 /* -------------------------------------- Manage Cookies Tab Styling -----------------------*/
 .fv-manage-cookies-tab {
   position: fixed;
@@ -190,6 +194,7 @@ input:checked + .fv-slider:before {
     width: 100%;
     padding: 20px 0 20px 0;
   }
+
   .fv-cookie-popup p {
     padding: 0 5%;
   }
