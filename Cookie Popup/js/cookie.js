@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Accept all cookies
   acceptButton.addEventListener("click", function () {
-    localStorage.setItem("fallsviewCookieConsent", "accepted");
-    localStorage.setItem("fallsviewAnalyticsCookies", "true");
-    localStorage.setItem("fallsviewOtherCookies", "true");
-    localStorage.setItem("fallsviewConsentUpdated", new Date().toLocaleString());
+    localStorage.setItem("fallsviewCookieConsent", sanitizeInput("accepted"));
+    localStorage.setItem("fallsviewAnalyticsCookies", sanitizeInput("true"));
+    localStorage.setItem("fallsviewOtherCookies", sanitizeInput("true"));
+    localStorage.setItem("fallsviewConsentUpdated", sanitizeInput(new Date().toLocaleString()));
     updateCheckboxes();
     consentPopup.style.display = "none";
     manageCookiesTab.style.display = "block";
@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Decline non-essential cookies
   declineButton.addEventListener("click", function () {
-    localStorage.setItem("fallsviewCookieConsent", "declined");
-    localStorage.setItem("fallsviewAnalyticsCookies", "false");
-    localStorage.setItem("fallsviewOtherCookies", "false");
-    localStorage.setItem("fallsviewConsentUpdated", new Date().toLocaleString());
+    localStorage.setItem("fallsviewCookieConsent", sanitizeInput("declined"));
+    localStorage.setItem("fallsviewAnalyticsCookies", sanitizeInput("false"));
+    localStorage.setItem("fallsviewOtherCookies", sanitizeInput("false"));
+    localStorage.setItem("fallsviewConsentUpdated", sanitizeInput(new Date().toLocaleString()));
     updateCheckboxes();
     consentPopup.style.display = "none";
     manageCookiesTab.style.display = "block";
@@ -65,10 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
   savePreferencesButton.addEventListener("click", function () {
     const analyticsChecked = document.getElementById("fv-analyticsCookies").checked;
     const otherChecked = document.getElementById("fv-otherCookies").checked;
-    localStorage.setItem("fallsviewAnalyticsCookies", analyticsChecked.toString());
-    localStorage.setItem("fallsviewOtherCookies", otherChecked.toString());
-    localStorage.setItem("fallsviewCookieConsent", "custom");
-    localStorage.setItem("fallsviewConsentUpdated", new Date().toLocaleString());
+    localStorage.setItem("fallsviewAnalyticsCookies", sanitizeInput(analyticsChecked.toString()));
+    localStorage.setItem("fallsviewOtherCookies", sanitizeInput(otherChecked.toString()));
+    localStorage.setItem("fallsviewCookieConsent", sanitizeInput("custom"));
+    localStorage.setItem("fallsviewConsentUpdated", sanitizeInput(new Date().toLocaleString()));
     consentPopup.style.display = "none";
     manageCookiesTab.style.display = "block";
     handleCookies();
@@ -76,25 +76,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // -------------------------------------------------------------- FUNCTIONS:
 
+  // Sanitize input to prevent XSS attacks
+  function sanitizeInput(input) {
+    const element = document.createElement('div');
+    element.innerText = input;
+    return element.innerHTML;
+  }
+
   // Dynamically load a script if it is not already present on the page
+  // Create an HTML script tag with src and id attributes to the head of document
   function loadScript(src, id) {
     if (!document.getElementById(id)) {
-      const script = document.createElement("script");
-      script.src = src;
-      script.id = id;
-      document.head.appendChild(script);
+      // Validate that the script source is from a secure and trusted domain
+      if (src.startsWith('https://')) {
+        const script = document.createElement("script");
+        script.src = src;
+        script.id = id;
+        script.async = true; // Ensure the script is loaded asynchronously
+        document.head.appendChild(script);
+      } else {
+        console.error("Untrusted script source:", src);
+      }
     }
   }
 
+  // Dynamically load a script without a secure and trusted domain
+  /* function loadScript(src, id) {
+     if (!document.getElementById(id)) {
+       const script = document.createElement("script");
+       script.src = src;
+       script.id = id;
+       script.async = true; // Ensure the script is loaded asynchronously
+       document.head.appendChild(script);
+     }
+   } */
+
   // Remove a specified cookie by setting its Max-Age to a negative value
-  function deleteCookie(name) {
-    document.cookie = `${name}=; Max-Age=-1; path=/; domain=${window.location.hostname}`;
+  function deleteCookie(name, domain = window.location.hostname) {
+    document.cookie = `${name}=; Max-Age=-1; path=/; domain=${domain}; Secure; SameSite=Strict`;
   }
 
   // Remove Google Analytics cookies
   function deleteGoogleAnalyticsCookies() {
-    deleteCookie('_ga');
-    deleteCookie('_ga_QYZMBLS6EW');
+    deleteCookie('_ga', '127.0.0.1'); // .fallsviewcasinoresort.com
+    deleteCookie('_ga_QYZMBLS6EW', '127.0.0.1'); // .fallsviewcasinoresort.com
+  }
+
+  // Remove third-party cookies
+  function deleteThirdPartyCookies() {
+    deleteCookie('IDE', '.doubleclick.net');
+    deleteCookie('ar_debug', '.doubleclick.net');
+    deleteCookie('receive-cookie-deprecation', '.doubleclick.net');
+    deleteCookie('__spdt', '127.0.0.1'); // .fallsviewcasinoresort.com
+    deleteCookie('_fbp', '127.0.0.1'); // .fallsviewcasinoresort.com
+    deleteCookie('_gcl_au', '127.0.0.1'); // .fallsviewcasinoresort.com
   }
 
   // Retrieve consent settings from localStorage and load or delete cookies based on the user's consent status
@@ -104,24 +139,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const otherConsent = localStorage.getItem("fallsviewOtherCookies") === "true";
 
     // Load essential cookies (always active)
-    loadScript("/path/to/essential-script.js", "essential");
+    loadScript("https://essential.js", "essential");
 
     // Load analytics cookies if consented
     if (analyticsConsent) {
-      loadScript("https://www.googletagmanager.com/gtag/js?id=G-QYZMBLS6EW", "analytics");
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag("js", new Date());
-      gtag("config", "G-QYZMBLS6EW");
+      // Load Google Tag Manager script if consent is given
+      (function(w,d,s,l,i){
+        w[l]=w[l]||[];
+        w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-5KHP8BR');
     } else {
-      deleteGoogleAnalyticsCookies();
+      deleteGoogleAnalyticsCookies(); 
     }
+    
 
-    // Load other cookies if consented
+    // If the user has agreed to other (non-essential) cookies:
     if (otherConsent) {
-      loadScript("https://example.com/other-script.js", "other");
+      // Load a script that sets up these additional cookies.
+      // This is a placeholder for the actual script that manages first-party non-essential cookies.
+      loadScript("https://other.js", "other");
     } else {
-      deleteCookie("otherCookieName"); // Replace with actual other cookie names
+      // If the user has declined other cookies:
+      // Delete any existing non-essential cookies specific to your site (e.g., "_ga_QYZMBLS6EW").
+      deleteCookie("otherCookieName", '127.0.0.1'); // .fallsviewcasinoresort.com
+      
+      // Also, delete any third-party cookies that are non-essential.
+      deleteThirdPartyCookies();
     }
   }
 
