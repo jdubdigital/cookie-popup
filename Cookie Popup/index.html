@@ -7,9 +7,20 @@
     <title>Cookie Consent</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-5KHP8BR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'GTM-5KHP8BR');  // Replace with your GTM ID
+    </script>
+
+
 </head>
 
 <body>
+
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------->
 
     <div id="fv-cookieConsentPopup" class="fv-cookie-popup">
         <div class="fv-cookie-content">
@@ -35,18 +46,20 @@
                 <div class="fv-toggle-switch">
                     <label class="fv-toggle-label"><strong>Analytics:</strong> Help us understand how visitors interact with our website by collecting and reporting information anonymously.</label>
                     <label class="fv-switch">
-                        <input type="checkbox" id="fv-analyticsCookies">
-                        <span class="fv-slider"></span>
+                        <input type="checkbox" id="fv-analyticsCookies" checked disabled>
+                        <span class="fv-slider" style="background-color: #919191;"></span>
                     </label>
                 </div>
                 <div class="fv-toggle-switch">
-                    <label class="fv-toggle-label"><strong>Other:</strong> Used to personalize your experience and for marketing purposes.</label>
+                    <label class="fv-toggle-label"><strong>Marketing:</strong> Used to personalize your experience and for marketing purposes.</label>
                     <label class="fv-switch">
-                        <input type="checkbox" id="fv-otherCookies">
+                        <input type="checkbox" id="fv-marketingCookies">
                         <span class="fv-slider"></span>
                     </label>
                 </div>
-                <button id="fv-savePreferences" class="fv-btn">Save Preferences</button>
+                <button id="fv-savePreferences" class="fv-btn">Save and Close</button>
+                <button id="MarketingConsentTrigger" style="display:none;"></button>
+
             </div>
         </div>
     </div>
@@ -55,7 +68,9 @@
         <i class="fas fa-cookie-bite"></i>
     </div>
 
-    <script src="js/cookie.js"></script>
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    <script src="js/working-cookie.js"></script>
 </body>
 
 </html>
