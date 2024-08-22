@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteCookie('receive-cookie-deprecation', '.doubleclick.net');
     deleteCookie('__spdt', '127.0.0.1'); // .fallsviewcasinoresort.com
     deleteCookie('_fbp', '127.0.0.1'); // .fallsviewcasinoresort.com
+    deleteCookie('_gcl', '127.0.0.1'); // .fallsviewcasinoresort.com
     deleteCookie('_gcl_au', '127.0.0.1'); // .fallsviewcasinoresort.com
   }
 
@@ -134,17 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
       'analytics_storage': 'granted', // Analytics always granted
     });
 
-    // Load essential cookies (analytics, always active)
-    (function(w,d,s,l,i){
-      w[l]=w[l]||[];
-      w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-      var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true;
-      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-5KHP8BR');
-
     if (marketingConsent) {
       console.log("Loading marketing scripts");
     } else {
@@ -168,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
   updateCheckboxes();
 
   // Use the Marketing Consent Trigger to initialize consent
-  document.getElementById("fv-savePreferences").addEventListener("click", function() {
+  document.getElementById("MarketingConsentTrigger").addEventListener("click", function() {
     handleCookies();
   });
 });
